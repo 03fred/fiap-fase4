@@ -1,5 +1,7 @@
 package com.br.fiap.fase4.services;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.br.fiap.fase4.dto.EvaluationDTO;
@@ -20,5 +22,10 @@ public class EvaluationServiceImpl implements EvaluationService {
 
 		 Evaluation model = new Evaluation(dto);
 		 this.repository.save(model);
+	}
+
+	@Override
+	public List<Evaluation> getAll() {
+		return this.repository.findAll();
 	}
 }
