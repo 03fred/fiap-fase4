@@ -15,7 +15,7 @@ public class EventGridConfig {
     public EventGridPublisherClient<EventGridEvent> eventGridClient() {
 
         return new EventGridPublisherClientBuilder()
-                .endpoint("https://evaluation-topic.brazilsouth.eventgrid.azure.net/api/events")
+                .endpoint("https://evaluation-topic.brazilsouth.eventgrid.azure.net")
                 .credential(new DefaultAzureCredentialBuilder().build())
                 .buildEventGridEventPublisherClient();
     }
