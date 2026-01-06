@@ -3,7 +3,7 @@ package com.br.fiap.fase4.conf;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.azure.identity.DefaultAzureCredentialBuilder;
+import com.azure.core.credential.AzureKeyCredential;
 import com.azure.messaging.eventgrid.EventGridEvent;
 import com.azure.messaging.eventgrid.EventGridPublisherClient;
 import com.azure.messaging.eventgrid.EventGridPublisherClientBuilder;
@@ -14,9 +14,15 @@ public class EventGridConfig {
     @Bean
     public EventGridPublisherClient<EventGridEvent> eventGridClient() {
 
+    	String key = System.getenv("EVENTGRID_TOPIC_KEY");
+
+    	if (key == null || key.isBlank()) {
+    	    throw new IllegalStateException("EVENTGRID_TOPIC_KEY não definida");
+    	}
+    	
         return new EventGridPublisherClientBuilder()
-                .endpoint("https://evaluation-topic.brazilsouth.eventgrid.azure.net")
-                .credential(new DefaultAzureCredentialBuilder().build())
+                .endpoint("https://evaluation-topic.brazilsouth.eventgrid.azure.net/api/events")
+                .credential(new AzureKeyCredential(key))
                 .buildEventGridEventPublisherClient();
     }
 }
